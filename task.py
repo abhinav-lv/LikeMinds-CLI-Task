@@ -1,8 +1,10 @@
+# Access can be any string [Eg: READ, WRITE]
 class Access:
     def __init__(self, name):
         self.name = name
 
 
+# Each resource contains a set of allowed accesses
 class Resource:
     def __init__(self, name):
         self.name = name
@@ -12,6 +14,7 @@ class Resource:
         self.allowedAccesses.add(access.name)
 
 
+# Each role has a dictionary (map) of resources (key is resource and value is a set of accesses for that resource)
 class Role:
     def __init__(self, name):
         self.name = name
@@ -23,6 +26,7 @@ class Role:
         self.accessMap[resource.name].add(access.name)
 
 
+# Every user has a list of roles attached to them
 class User:
     def __init__(self, name):
         self.name = name
@@ -31,8 +35,9 @@ class User:
     def addRole(self, role):
         self.roles.append(role)
 
-
+# Main system for performing actions
 class RBACSystem:
+    # Global objects (dicts) to store users, roles, resources and accesses
     def __init__(self):
         self.users = {}
         self.roles = {}
@@ -63,6 +68,7 @@ class RBACSystem:
         else:
             self.users[name] = User(name)
 
+    # Add access to global resource object
     def addAccessOnResource(self, accessName, resourceName):
         if accessName not in self.accesses:
             print(f"Access '{accessName}' does not exist.")
@@ -75,6 +81,7 @@ class RBACSystem:
         access = self.accesses[accessName]
         resource.addAccess(access)
 
+    # Add access to resource to given role
     def addAccessOnResourceToRole(self, accessName, resourceName, roleName):
         if roleName not in self.roles:
             print(f"Role '{roleName}' does not exist.")
@@ -96,6 +103,7 @@ class RBACSystem:
         access = self.accesses[accessName]
         role.addAccessToResource(access, resource)
 
+    # Add role to a user
     def addRoleToUser(self, roleName, userName):
         if userName not in self.users:
             print(f"User '{userName}' does not exist.")
@@ -108,6 +116,7 @@ class RBACSystem:
         role = self.roles[roleName]
         user.addRole(role)
 
+    # Check access for a user on a resource
     def checkAccess(self, userName, resourceName, accessName):
         if userName not in self.users:
             return f"User '{userName}' does not exist."
@@ -125,6 +134,7 @@ class RBACSystem:
 
         return f"NO, '{userName}' cannot perform '{accessName}' on '{resourceName}'"
 
+    # List all available global entities
     def listAllEntities(self):
         print("Users:")
         for userName in self.users:
