@@ -5,6 +5,12 @@
 -   There are no requirements or libaries needed.
 -   You can create a python environment and just run the script: `python task.py`
 
+## Note
+
+-   I tried implementing `argparse` to make an actual CLI app, but couldn't get it to work.
+-   Due to limited time, I just used a while loop where commands are entered when the program is running.
+-   So we can just run the program, and pass the commands when the program is running.
+
 ## List of Commands
 
 -   Create a new `access` method.
@@ -59,4 +65,9 @@
 
     ```
     > listAllEntities
+    ```
+
+-   Exit the program
+    ```
+    > exit
     ```
